@@ -1,0 +1,10 @@
+<p class ="title">Folders:</p>
+
+<div class="flex">
+<div class ="grid">
+<ng-container  *ngFor = "let folder of folders" >
+
+<a class = "subtitle folder" [routerLink] = "['/folders/', folder.id]">{{folder.name}}</a>
+</ng-container>
+</div>
+</div>
