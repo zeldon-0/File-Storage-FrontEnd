@@ -4,7 +4,7 @@ import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
-import { fakeBackendProvider } from './_helpers';
+
 
 import { AppComponent }  from './app.component';
 import { routing }        from './app.routing';
@@ -17,11 +17,16 @@ import { RegisterComponent } from './_components';
 import { FolderListComponent } from './_components';
 import { FolderComponent } from './_components';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
         routing
     ],
     declarations: [
@@ -37,8 +42,6 @@ import { FolderComponent } from './_components';
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
-        // provider used to create fake backend
-        fakeBackendProvider
     ],
     bootstrap: [AppComponent]
 })

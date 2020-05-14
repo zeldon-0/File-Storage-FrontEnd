@@ -1,4 +1,4 @@
-﻿export * from './alert.component';
+﻿export * from './alert';
 export * from './register';
 export * from './login';
 export * from './home';

@@ -1,80 +1,46 @@
-<div id="viewport">
-   <!-- Sidebar -->
-   <div id="sidebar">
-     <header>
-       <a href="#">My App</a>
-     </header>
-     <ul class="nav">
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-view-dashboard"></i> Dashboard
-         </a>
-       </li>
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-link"></i> Shortcuts
-         </a>
-       </li>
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-widgets"></i> Overview
-         </a>
-       </li>
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-calendar"></i> Events
-         </a>
-       </li>
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-info-outline"></i> About
-         </a>
-       </li>
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-settings"></i> Services
-         </a>
-       </li>
-       <li>
-         <a href="#">
-           <i class="zmdi zmdi-comment-more"></i> Contact
-         </a>
-       </li>
-     </ul>
-   </div>
-   <!-- Content -->
-   <div id="content">
-     <nav class="navbar navbar-default">
-       <div class="container-fluid">
-         <ul class="nav navbar-nav navbar-right">
-           <li>
-             <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
-             </a>
-           </li>
-           <li><a href="#">Test User</a></li>
-         </ul>
-       </div>
-     </nav>
-     <div class="container-fluid">
-       <h1>Simple Sidebar</h1>
-       <p>
-         Make sure to keep all page content within the 
-         <code>#content</code>.
-       </p>
-     </div>
-   </div>
- </div>
+<div id ="page">
+  <div id = "main">
+    <div *ngIf="error" class="alert alert-danger"> 
+      {{ error }} 
+    </div>
+    <ng-container *ngIf = "folder.parentId == null">  
+      <button class = "return" [routerLink] = "['/folders/']">Go back</button>
+    </ng-container>
 
+    <ng-container *ngIf = "folder.parentId">  
+      <button class = "return" [routerLink] = "['/folders/', folder.parentId]">Go back</button>
+    </ng-container>
 
-<ng-container  *ngIf = "folder">
-    <app-folder-list [folder] = "folder"></app-folder-list>
-<div class ="box">
- <ng-container *ngIf = "folder.parentId">  
-    <a class = "subtitle folder" [routerLink] = "['/folders/', folder.parentId]">Go back</a>
- </ng-container>
- <ng-container *ngIf = "folder.parentId == null">  
-    <a class = "subtitle folder" [routerLink] = "['/folders/']">Go back</a>
- </ng-container>
+    <ng-container  *ngIf = "folder">
+        <app-folder-list [folder] = "folder"></app-folder-list>
+    </ng-container>
+  
+  </div>
+  <div class = "flex">
+    <div id = "nav" class= "side-menu" *ngIf = "folder">
+      <div>
+        <p class = "subtitle">Folder Name:</p>
+        <p class = "content">{{folder.name}} </p>
+
+      </div>
+      <div>
+        <p class = "subtitle">Folder Description:</p>
+        <p class = "content">{{folder.description}} </p>
+      </div>
+      <div>
+        <p class = "subtitle">Folder Owner:</p>
+        <p class = "content">{{folder.owner.userName}} </p>
+      </div>
+      <div>
+        <p class = "subtitle">Share Status:</p>
+        <p class = "content" *ngIf = "folder.shareStatus == 0"> Private  <button class="open-button" onclick="makeShareable()"> Make Shareable</button> </p>
+        <p class = "content" *ngIf = "folder.shareStatus == 1"> Shareable by link <button class="open-button" onclick="makePrivate()">Make Private</button></p>
+
+      </div>
+      <div>
+        <p class = "subtitle">Users with access:</p>
+        <button class="open-button" onclick="openForm()">Open Form</button>
+      </div>
+    </div>
+  </div>
 </div>
-</ng-container>
-
