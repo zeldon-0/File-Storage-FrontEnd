@@ -1,0 +1,8 @@
+<div class="flex">
+    <div class="grid"> 
+        <ngcontainer class ="user" *ngFor = "let user of users">
+            <a class=" subtitle badge">{{user.userName}}</a>
+        </ngcontainer>
+    </div>
+</div>
+<button class="btn btn-outline-danger"  [routerLink] = "['../']" >Hide the user list</button>

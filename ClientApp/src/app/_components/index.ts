@@ -4,3 +4,4 @@ export * from './login';
 export * from './home';
 export * from './folder-list';
 export * from './folder';
+export * from './shared-users';

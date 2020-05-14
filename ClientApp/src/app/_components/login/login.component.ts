@@ -11,10 +11,8 @@ import { NotificationService, AuthenticationService } from '../../_services';
     templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    loading = false;
     submitted = false;
     returnUrl: string;
-    error: string;
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -49,7 +47,6 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
@@ -57,10 +54,8 @@ export class LoginComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    console.log(error);
-                    this.error = error;
+
                     this.notificationService.showError(error, 'Error');
-                    this.loading = false;
                 });
     }
 }

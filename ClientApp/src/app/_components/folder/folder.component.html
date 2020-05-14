@@ -1,14 +1,12 @@
 <div id ="page">
   <div id = "main">
-    <div *ngIf="error" class="alert alert-danger"> 
-      {{ error }} 
-    </div>
+
     <ng-container *ngIf = "folder.parentId == null">  
-      <button class = "return" [routerLink] = "['/folders/']">Go back</button>
+      <button class = "return btn-outline-secondary" [routerLink] = "['/folders/']">Go back</button>
     </ng-container>
 
     <ng-container *ngIf = "folder.parentId">  
-      <button class = "return" [routerLink] = "['/folders/', folder.parentId]">Go back</button>
+      <button class = "return btn-outline-secondary" [routerLink] = "['/folders/', folder.parentId]">Go back</button>
     </ng-container>
 
     <ng-container  *ngIf = "folder">
@@ -33,13 +31,21 @@
       </div>
       <div>
         <p class = "subtitle">Share Status:</p>
-        <p class = "content" *ngIf = "folder.shareStatus == 0"> Private  <button class="open-button" onclick="makeShareable()"> Make Shareable</button> </p>
-        <p class = "content" *ngIf = "folder.shareStatus == 1"> Shareable by link <button class="open-button" onclick="makePrivate()">Make Private</button></p>
+        <div class = "content"  *ngIf = "folder.shareStatus == 0">
+          <p> Private </p> 
+           <button class="btn btn-outline-info" (click)="share()"> Make Shareable</button>   
+        </div>
 
+        <div class = "content" *ngIf = "folder.shareStatus == 1">
+          <p > Shareable by link </p> 
+           <button class="btn btn-outline-info content" (click)="unShare()"> Make Unshareable</button>   
+        </div>
+      
       </div>
-      <div>
+      <div class = "content">
         <p class = "subtitle">Users with access:</p>
-        <button class="open-button" onclick="openForm()">Open Form</button>
+        <button class="btn btn-outline-info"  [routerLink] = "['sharingInfo']" >Display the user list</button>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>

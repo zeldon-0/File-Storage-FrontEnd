@@ -1,0 +1,33 @@
+.flex  {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+.grid {
+    flex: 1;
+    box-sizing: content-box;
+    display: grid;
+    grid-template-columns: repeat( 4, 1fr)
+}
+
+.user{
+    justify-self: stretch;
+    margin-top: 15px;
+    margin-right: 4px;
+    margin-left: 4px;
+    max-height: 50px;
+    border-width: 1px;
+    border-radius: 10px;
+    border-style: solid;
+    text-align: center;
+    box-sizing: content-box;
+
+    background-color: mintcream;
+  }
+  
+.subtitle
+  {
+    color:black;
+    font-size: 100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }

@@ -16,6 +16,7 @@ import { LoginComponent } from './_components';
 import { RegisterComponent } from './_components';
 import { FolderListComponent } from './_components';
 import { FolderComponent } from './_components';
+import { SharedUsersComponent } from './_components';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -36,7 +37,8 @@ import { ToastrModule } from 'ngx-toastr';
         LoginComponent,
         RegisterComponent,
         FolderListComponent,
-        FolderComponent
+        FolderComponent,
+        SharedUsersComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

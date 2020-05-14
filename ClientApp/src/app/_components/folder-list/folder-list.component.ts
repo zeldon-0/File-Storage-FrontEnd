@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./folder-list.component.css']
 })
 export class FolderListComponent implements OnInit {
-  private folders : Folder[] ;
+  folders : Folder[] ;
   private sub : Subscription = new Subscription();
 
   constructor(private folderService : FolderService) { }
