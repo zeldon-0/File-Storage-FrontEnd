@@ -5,3 +5,5 @@ export * from './home';
 export * from './folder-list';
 export * from './folder';
 export * from './shared-users';
+export * from './sharing-form';
+export * from './new-folder';

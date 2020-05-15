@@ -1,3 +1,8 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
+.body{
+  margin-left: 1%;
+}
 .grid {
     position:relative;
     display: grid;
@@ -13,6 +18,26 @@
   display: flex;
   width: 95%;
   flex-direction: column;
+}
+.add{
+  box-sizing: content-box;
+  text-decoration: none;
+  margin: 10px 0px 0px 10px;
+  padding: 10px 14px;
+  padding-top: 3px;
+  font-size: 35px;
+  font-weight: bolder;
+  width: 40px;
+  text-align: center;
+  border-style: solid;
+  color: black;
+}
+.flex-headers{
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  padding: 10px 0px 10px 0px;
+
 }
 
 .folder{

@@ -1,10 +1,17 @@
-<p class ="title">Folders:</p>
+<div class="body">
+    <div class = "flex-headers">
+        <p class ="title">Folders:</p>
+        <button class = "btn btn-outline-secondary"  *ngIf = "folderToMove"  (click)="move()">Move the folder here</button>
+        <button class = "add btn btn-outline-secondary"  *ngIf = "folder == null" [routerLink] = "['/newFolder/']">+</button>
+        <button class = "add btn btn-outline-secondary"  *ngIf = "folder" [routerLink] = "['/newFolder/',folder.id]">+</button>
+    </div>
+    <div class="flex">
+    <div class ="grid">
+    <ng-container  *ngFor = "let folder of folders" >
 
-<div class="flex">
-<div class ="grid">
-<ng-container  *ngFor = "let folder of folders" >
-
-<a class = "subtitle folder btn btn-outline-secondary" [routerLink] = "['/folders/', folder.id]">{{folder.name}}</a>
-</ng-container>
-</div>
+    <a class = "subtitle folder btn btn-outline-secondary" [routerLink] = "['/folders/', folder.id]">
+        <i class="fa fa-folder" style="font-size: 150%; margin-right: 5%;"></i>{{folder.name}}</a>
+    </ng-container>
+    </div>
+    </div>
 </div>

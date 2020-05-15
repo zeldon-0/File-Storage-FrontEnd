@@ -1,12 +1,12 @@
 <div id ="page">
   <div id = "main">
 
-    <ng-container *ngIf = "folder.parentId == null">  
-      <button class = "return btn-outline-secondary" [routerLink] = "['/folders/']">Go back</button>
+    <ng-container style = "text-align: center;" *ngIf = "folder.parentId == null">  
+      <button class = "return btn btn-outline-secondary"  *ngIf = "folder.parentId == null" [routerLink] = "['/folders/']">&laquo;</button>
     </ng-container>
 
     <ng-container *ngIf = "folder.parentId">  
-      <button class = "return btn-outline-secondary" [routerLink] = "['/folders/', folder.parentId]">Go back</button>
+      <button class = "return btn btn-outline-secondary" [routerLink] = "['/folders/', folder.parentId]">&#8249;</button>
     </ng-container>
 
     <ng-container  *ngIf = "folder">
@@ -44,9 +44,31 @@
       </div>
       <div class = "content">
         <p class = "subtitle">Users with access:</p>
-        <button class="btn btn-outline-info"  [routerLink] = "['sharingInfo']" >Display the user list</button>
+        <button *ngIf = "!url.includes('sharingInfo')" class="btn btn-outline-info"  [routerLink] = "['sharingInfo']" >Display the user list</button>
         <router-outlet></router-outlet>
       </div>
+      <div class = "content" *ngIf = "(currentUser.id == folder.ownerId && currentUser.roles.includes('Corporate')) || currentUser.roles.includes('Admin') ">
+        <p class = "subtitle">Sharing form:</p>
+        <app-sharing-form [folder] = "folder"></app-sharing-form>
+      </div>
+      <div>
+        <p class = "subtitle">Folder Management:</p>
+        <div class = "flex-buttons">
+          <div class = "content"  *ngIf = "currentUser.id == folder.ownerId || currentUser.roles.includes('Admin')">
+            <button class="btn btn-outline-warning" (click)="copy()"> Copy</button>   
+          </div>
+          
+          <div class = "content" *ngIf = "currentUser.id == folder.ownerId || currentUser.roles.includes('Admin')">
+            <button class="btn btn-outline-info" (click)="move()"> Move</button>   
+          </div>
+          
+          <div class = "content" *ngIf = "currentUser.id == folder.ownerId || currentUser.roles.includes('Admin')">
+            <button class="btn btn-outline-danger" (click)="delete()"> Delete</button>   
+          </div>
+        </div>
+      
+      </div>
+      
     </div>
   </div>
 </div>

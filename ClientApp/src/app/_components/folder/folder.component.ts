@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FolderService, SharingService, NotificationService } from '../../_services';
+import { FolderService, SharingService, NotificationService, AuthenticationService } from '../../_services';
 
 import { Folder, User } from '../../_models';
 import { Subscription } from 'rxjs';
@@ -18,13 +18,19 @@ export class FolderComponent implements OnInit {
   private loading = false;
   error:string;
   currentUser: User;
+  url : string;
   constructor(private folderService : FolderService,
     private route : ActivatedRoute,
     private router : Router,
     private notificationService : NotificationService,
-    private sharingService : SharingService
+    private sharingService : SharingService,
+    private authenticationService : AuthenticationService
+
     ) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.url = this.router.url;
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     }
 
   ngOnInit() {
@@ -32,19 +38,19 @@ export class FolderComponent implements OnInit {
       this.folderId = params.get('folderId');
     });
 
+
+
     this.sub = this.folderService.getById(this.folderId)
       .subscribe(folder => 
         {
-          this.folder = folder
+          this.folder = folder;
         },
         error =>{
           this.notificationService.showError(error, "Error");
           this.router.navigate(['/']);
         });
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
+
 
   share() : void {
     this.sub = this.sharingService.makeFolderShareable(this.folderId)
@@ -57,11 +63,44 @@ export class FolderComponent implements OnInit {
   }
 
   unShare() : void {
-    this.sharingService.makeFolderUnshareable(this.folderId)
+    this.sub = this.sharingService.makeFolderUnshareable(this.folderId)
     .subscribe(
       obj =>{window.location.reload()},
       error => {
         this.notificationService.showError(error, "Error");
       });
+  }
+  copy() : void {
+    this.sub = this.folderService.copy(this.folderId)
+    .subscribe(
+      obj =>{
+        this.notificationService.showSuccess("Successfully copied the folder", "Success");
+      },
+      error => {
+        this.notificationService.showError(error, "Error");
+      });
+  }
+  delete() : void {
+    this.sub = this.folderService.delete(this.folderId)
+    .subscribe(
+      obj =>{
+        this.router.navigate(['/folders/', this.folder.parentId])
+      },
+      error => {
+        this.notificationService.showError(error, "Error");
+      });
+  }
+  move() : void {
+    if (localStorage.getItem("folderToMove"))
+    {
+      localStorage.removeItem("folderToMove");
+      this.notificationService.showWarning("Replaced the folder to move with the current one.", "Warning");
+    }
+    localStorage.setItem("folderToMove", JSON.stringify(this.folder));
+  }
+
+
+  ngOnDestroy() : void {
+    this.sub.unsubscribe();
   }
 }

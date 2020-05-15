@@ -21,14 +21,16 @@ export class SharingService {
 
   getFolderUserShares(folderId : string)
   {
-    return this.http.get<User[]>(`${this.apiUrl}/folders/${folderId}/sharingInfo`)
+    return this.http.get<User[]>(`${this.apiUrl}/folders/${folderId}/sharingInfo`);
+  }
+  
+  shareFolder(folderId : string, userName : string)
+  {
+    return this.http.put(`${this.apiUrl}/folders/${folderId}/share/${userName}`, {});
   }
 
-  update(folder: Folder) {
-      return this.http.put(`${this.apiUrl}/folders`, folder);
-  }
-
-  delete(id: string) {
-      return this.http.delete(`${this.apiUrl}/folders/${id}`);
+  shareFile(fileId : string, userName : string)
+  {
+    return this.http.put(`${this.apiUrl}/files/${fileId}/share/${userName}`, {});
   }
 }

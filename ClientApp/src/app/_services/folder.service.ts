@@ -17,13 +17,34 @@ export class FolderService {
         return this.http.get<Folder>(`${this.apiUrl}folders/${id}`);
     }
 
-
-    update(folder: Folder) {
-        return this.http.put(`${this.apiUrl}/folders`, folder);
+    postFolder(folder: Folder){
+        return this.http.post<Folder>(`${this.apiUrl}folders/`, folder);
+    }
+    
+    postSubfolder(folderId: string, folder: Folder){
+        return this.http.post<Folder>(`${this.apiUrl}folders/${folderId}/subfolders`, folder);
+    }
+    moveToFolder(toFolderId : string, folderToMoveId : string)
+    {
+        if (toFolderId)
+        {
+            return this.http.put(`${this.apiUrl}folders/${folderToMoveId}/move/${toFolderId}`, {});
+        }
+        else
+        {
+            return this.http.put(`${this.apiUrl}folders/${folderToMoveId}/move/`, {});
+        }
     }
 
-    delete(id: string) {
-        return this.http.delete(`${this.apiUrl}/folders/${id}`);
+    copy(folderId : string){
+        return this.http.post<Folder>(`${this.apiUrl}folders/${folderId}/copy`, {});
+    }
+    update(folder: Folder) {
+        return this.http.put(`${this.apiUrl}folders`, folder);
+    }
+
+    delete(folderId: string) {
+        return this.http.delete(`${this.apiUrl}folders/${folderId}`);
     }
  }
 

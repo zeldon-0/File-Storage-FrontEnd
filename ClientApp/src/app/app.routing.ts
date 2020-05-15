@@ -1,6 +1,6 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './_components';
+import { HomeComponent, NewFolderComponent } from './_components';
 import { LoginComponent } from './_components';
 import { RegisterComponent } from './_components';
 import { FolderComponent } from './_components';
@@ -18,6 +18,8 @@ const appRoutes: Routes = [
                 component: SharedUsersComponent
             }
         ] },
+    {path : 'newFolder', component: NewFolderComponent},
+    {path : 'newFolder/:folderId', component: NewFolderComponent},
     { path: '**', redirectTo: '' }
 ];
 

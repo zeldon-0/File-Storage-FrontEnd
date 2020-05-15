@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
         private notificationService : NotificationService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (localStorage.getItem("currentUser")) { 
             this.router.navigate(['/']);
         }
     }

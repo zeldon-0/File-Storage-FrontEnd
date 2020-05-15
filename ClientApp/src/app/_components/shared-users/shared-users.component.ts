@@ -26,12 +26,11 @@ export class SharedUsersComponent implements OnInit {
     this.route.parent.paramMap.subscribe(params => {
       this.folderId = params.get('folderId');
     });
-    console.log(this.folderId);
 
     this.sub = this.sharingService.getFolderUserShares(this.folderId)
     .subscribe(users => 
       {
-        this.users = users
+        this.users = users;
       },
       error =>{
         this.notificationService.showError(error[0], "Error");

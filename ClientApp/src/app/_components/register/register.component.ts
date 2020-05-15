@@ -19,14 +19,14 @@ export class RegisterComponent implements OnInit {
         private notificationService : NotificationService
     ) { 
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (localStorage.getItem("currentUser")) { 
             this.router.navigate(['/']);
         }
     }
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            email: ['', Validators.required],
+            email: ['', Validators.required, Validators.email],
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(8)]]
         });
