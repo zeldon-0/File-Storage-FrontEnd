@@ -1,47 +1,46 @@
-<div id ="page">
+<div class ="page">
   <div id = "main">
 
-    <ng-container style = "text-align: center;" *ngIf = "folder.parentId == null && folder.ownerId == currentUser.id">  
+    <ng-container style = "text-align: center;" *ngIf = "file.folderId == null && file.ownerId == currentUser.id">  
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/']">&#8249;</button>
     </ng-container>
-
     
-    <ng-container style = "text-align: center;" *ngIf = "folder.parentId == null && folder.ownerId != currentUser.id">  
+    <ng-container style = "text-align: center;" *ngIf = "file.folderId == null && file.ownerId != currentUser.id">  
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/shared/']">&#8249;</button>
     </ng-container>
 
-    <ng-container *ngIf = "folder.parentId">  
-      <button class = "return btn btn-outline-secondary" [routerLink] = "['/folders/', folder.parentId]">&#8249;</button>
+    <ng-container *ngIf = "file.folderId">  
+      <button class = "return btn btn-outline-secondary" [routerLink] = "['/folders/', file.folderId]">&#8249;</button>
     </ng-container>
 
-    <ng-container  *ngIf = "folder">
-        <app-folder-list [folder] = "folder"></app-folder-list>
-        <app-file-list [folder] = "folder"></app-file-list>
-      </ng-container>  
   </div>
-  <div class = "flex">
-    <div id = "nav" class= "side-menu" *ngIf = "folder">
+  <div class = "flex col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div id = "nav" class= "side-menu" *ngIf = "file">
       <div>
-        <p class = "subtitle">Folder Name:</p>
-        <p class = "content">{{folder.name}} </p>
+        <p class = "subtitle">File Name:</p>
+        <p class = "content">{{file.name}} </p>
 
       </div>
       <div>
-        <p class = "subtitle">Folder Description:</p>
-        <p class = "content">{{folder.description}} </p>
+        <p class = "subtitle">File Description:</p>
+        <p class = "content">{{file.description}} </p>
       </div>
       <div>
-        <p class = "subtitle">Folder Owner:</p>
-        <p class = "content">{{folder.owner.userName}} </p>
+        <p class = "subtitle">File Owner:</p>
+        <p class = "content">{{file.owner.userName}} </p>
       </div>
-      <div *ngIf = "currentUser.id == folder.ownerId || currentUser.roles.includes('Admin') ">
+      <div>
+        <p class = "subtitle">File Link:</p>
+        <p class = "content">{{file.url}} </p>
+      </div>
+      <div *ngIf = "currentUser.id == file.ownerId || currentUser.roles.includes('Admin') ">
         <p class = "subtitle">Share Status:</p>
-        <div class = "content"  *ngIf = "folder.shareStatus == 0">
+        <div class = "content"  *ngIf = "file.shareStatus == 0">
           <p> Private </p> 
            <button class="btn btn-outline-info" (click)="share()"> Make Shareable</button>   
         </div>
 
-        <div class = "content" *ngIf = "folder.shareStatus == 1">
+        <div class = "content" *ngIf = "file.shareStatus == 1">
           <p > Shareable by link </p> 
            <button class="btn btn-outline-info content" (click)="unShare()"> Make Unshareable</button>   
         </div>
@@ -51,12 +50,12 @@
         <button *ngIf = "!url.includes('sharingInfo')" class="btn btn-outline-info"  [routerLink] = "['sharingInfo']" >Display the user list</button>
         <router-outlet></router-outlet>
       </div>
-      <div class = "content" *ngIf = "(currentUser.id == folder.ownerId && currentUser.roles.includes('Corporate')) || currentUser.roles.includes('Admin') ">
+      <div class = "content" *ngIf = "(currentUser.id == file.ownerId && currentUser.roles.includes('Corporate')) || currentUser.roles.includes('Admin') ">
         <p class = "subtitle">Sharing form:</p>
-        <app-sharing-form [folder] = "folder"></app-sharing-form>
+        <app-sharing-form [file] = "file"></app-sharing-form>
       </div>
-      <div *ngIf = "currentUser.id == folder.ownerId || currentUser.roles.includes('Admin')">
-        <p class = "subtitle">Folder Management:</p>
+      <div *ngIf = "currentUser.id == file.ownerId || currentUser.roles.includes('Admin')">
+        <p class = "subtitle">File Management:</p>
         <div class = "flex-buttons">
           <div class = "content">
             <button class="btn btn-outline-warning" (click)="copy()"> Copy</button>   

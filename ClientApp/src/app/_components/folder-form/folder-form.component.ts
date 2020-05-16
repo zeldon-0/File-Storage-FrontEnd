@@ -6,11 +6,11 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-new-folder',
-  templateUrl: './new-folder.component.html',
-  styleUrls: ['./new-folder.component.css']
+  selector: 'app-folder-form',
+  templateUrl: './folder-form.component.html',
+  styleUrls: ['./folder-form.component.css']
 })
-export class NewFolderComponent implements OnInit {
+export class FolderFormComponent implements OnInit {
   private sub : Subscription = new Subscription();
   folderForm: FormGroup;
   private folderId: string; 

@@ -13,6 +13,7 @@ export class SharedUsersComponent implements OnInit {
 
   users : User[];
   private folderId : string;
+  private fileId : string;
   private sub : Subscription = new Subscription();
 
   constructor(private sharingService:SharingService,
@@ -27,15 +28,32 @@ export class SharedUsersComponent implements OnInit {
       this.folderId = params.get('folderId');
     });
 
-    this.sub = this.sharingService.getFolderUserShares(this.folderId)
-    .subscribe(users => 
-      {
-        this.users = users;
-      },
-      error =>{
-        this.notificationService.showError(error[0], "Error");
-        this.router.navigate(['/']);
+    if(!this.folderId)
+    {
+      this.route.parent.paramMap.subscribe(params => {
+        this.fileId = params.get('fileId');
       });
+      this.sub = this.sharingService.getFileUserShares(this.fileId)
+      .subscribe(users => 
+        {
+          this.users = users;
+        },
+        error =>{
+          this.notificationService.showError(error[0], "Error");
+          this.router.navigate(['/']);
+        });
+    }
+    else{
+      this.sub = this.sharingService.getFolderUserShares(this.folderId)
+      .subscribe(users => 
+        {
+          this.users = users;
+        },
+        error =>{
+          this.notificationService.showError(error[0], "Error");
+          this.router.navigate(['/']);
+        });
+    }
   }
   ngOnDestroy() : void {
         this.sub.unsubscribe();

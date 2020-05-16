@@ -23,6 +23,22 @@ export class SharingService {
   {
     return this.http.get<User[]>(`${this.apiUrl}/folders/${folderId}/sharingInfo`);
   }
+
+
+  makeFileShareable(fileId : string)
+  {
+    return this.http.put(`${this.apiUrl}/files/${fileId}/share`, {});
+  }
+
+  makeFileUnshareable(fileId : string)
+  {
+    return this.http.put(`${this.apiUrl}/files/${fileId}/unshare`, {});
+  }
+
+  getFileUserShares(fileId : string)
+  {
+    return this.http.get<User[]>(`${this.apiUrl}/filse/${fileId}/sharingInfo`);
+  }
   
   shareFolder(folderId : string, userName : string)
   {
@@ -32,5 +48,15 @@ export class SharingService {
   shareFile(fileId : string, userName : string)
   {
     return this.http.put(`${this.apiUrl}/files/${fileId}/share/${userName}`, {});
+  }
+
+  getSharedFolders()
+  {
+    return this.http.get<Folder[]>(`${this.apiUrl}/folders/shared`);
+  }
+
+  getSharedFiles()
+  {
+    return this.http.get<File[]>(`${this.apiUrl}/files/shared`);
   }
 }

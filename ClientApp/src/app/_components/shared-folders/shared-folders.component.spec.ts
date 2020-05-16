@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewFolderComponent } from './new-folder.component';
+import { SharedFoldersComponent } from './shared-folders.component';
 
-describe('NewFolderComponent', () => {
-  let component: NewFolderComponent;
-  let fixture: ComponentFixture<NewFolderComponent>;
+describe('SharedFoldersComponent', () => {
+  let component: SharedFoldersComponent;
+  let fixture: ComponentFixture<SharedFoldersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewFolderComponent ]
+      declarations: [ SharedFoldersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewFolderComponent);
+    fixture = TestBed.createComponent(SharedFoldersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

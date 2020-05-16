@@ -1,0 +1,16 @@
+<div class="body">
+    <div class = "flex-headers">
+        <p class ="title">Files:</p>
+        <button class = "btn btn-outline-secondary"  *ngIf = "fileToMove"  (click)="move()">Move the file here</button>
+        <button class = "add btn btn-outline-secondary"  *ngIf = "folder == null" [routerLink] = "['/newFile/']">+</button>
+        <button class = "add btn btn-outline-secondary"  *ngIf = "folder && folder.ownerId == currentUser.id || currentUser.roles.includes('Admin')" [routerLink] = "['/newFile/',folder.id]">+</button>
+    </div>
+    <div class="flex">
+        <div class ="grid">
+            <ng-container  *ngFor = "let file of files" >
+
+            <a class = "subtitle file btn btn-outline-secondary" [routerLink] = "['/files/', file.id]">{{file.name}}</a>
+        </ng-container>
+        </div>
+    </div>
+</div>

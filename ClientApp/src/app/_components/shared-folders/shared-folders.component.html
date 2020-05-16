@@ -1,9 +1,6 @@
 <div class="body">
     <div class = "flex-headers">
         <p class ="title">Folders:</p>
-        <button class = "btn btn-outline-secondary"  *ngIf = "folderToMove"  (click)="move()">Move the folder here</button>
-        <button class = "add btn btn-outline-secondary"  *ngIf = "folder == null" [routerLink] = "['/newFolder/']">+</button>
-        <button class = "add btn btn-outline-secondary"  *ngIf = "folder && folder.ownerId == currentUser.id || currentUser.roles.includes('Admin')" [routerLink] = "['/newFolder/',folder.id]">+</button>
     </div>
     <div class="flex">
     <div class ="grid">

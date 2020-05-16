@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FolderService, SharingService, NotificationService} from '../../_services';
+import { FileService, SharingService, NotificationService} from '../../_services';
 
-import { Folder, User } from '../../_models';
+import { Folder, File, User } from '../../_models';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-folder',
-  templateUrl: './folder.component.html',
-  styleUrls: ['./folder.component.css']
+  selector: 'app-file',
+  templateUrl: './file.component.html',
+  styleUrls: ['./file.component.css']
 })
-export class FolderComponent implements OnInit {
+export class FileComponent implements OnInit {
 
-  folder : Folder;
+  file : File;
   private sub : Subscription = new Subscription();
-  private folderId : string;
+  private fileId : string;
   error:string;
   currentUser: User;
   url : string;
-  constructor(private folderService : FolderService,
+  constructor(private fileService : FileService,
     private route : ActivatedRoute,
     private router : Router,
     private notificationService : NotificationService,
-    private sharingService : SharingService
+    private sharingService : SharingService,
+
     ) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.url = this.router.url;
@@ -32,15 +33,15 @@ export class FolderComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.folderId = params.get('folderId');
+      this.fileId = params.get('fileId');
     });
 
 
 
-    this.sub = this.folderService.getById(this.folderId)
-      .subscribe(folder => 
+    this.sub = this.fileService.getById(this.fileId)
+      .subscribe(file => 
         {
-          this.folder = folder;
+          this.file = file;
         },
         error =>{
           this.notificationService.showError(error, "Error");
@@ -50,7 +51,7 @@ export class FolderComponent implements OnInit {
 
 
   share() : void {
-    this.sub = this.sharingService.makeFolderShareable(this.folderId)
+    this.sub = this.sharingService.makeFileShareable(this.fileId)
       .subscribe(
         obj =>{window.location.reload()},
         error => {
@@ -60,7 +61,7 @@ export class FolderComponent implements OnInit {
   }
 
   unShare() : void {
-    this.sub = this.sharingService.makeFolderUnshareable(this.folderId)
+    this.sub = this.sharingService.makeFileUnshareable(this.fileId)
     .subscribe(
       obj =>{window.location.reload()},
       error => {
@@ -68,36 +69,36 @@ export class FolderComponent implements OnInit {
       });
   }
   copy() : void {
-    this.sub = this.folderService.copy(this.folderId)
+    this.sub = this.fileService.copy(this.fileId)
     .subscribe(
       obj =>{
-        this.notificationService.showSuccess("Successfully copied the folder", "Success");
+        this.notificationService.showSuccess("Successfully copied the file", "Success");
       },
       error => {
         this.notificationService.showError(error, "Error");
       });
   }
   delete() : void {
-    this.sub = this.folderService.delete(this.folderId)
+    this.sub = this.fileService.delete(this.fileId)
     .subscribe(
       obj =>{
-        this.router.navigate(['/folders/', this.folder.parentId])
+        this.router.navigate(['/folders/', this.file.folderId])
       },
       error => {
         this.notificationService.showError(error, "Error");
       });
   }
   move() : void {
-    if (localStorage.getItem("folderToMove"))
+    if (localStorage.getItem("fileToMove"))
     {
-      localStorage.removeItem("folderToMove");
-      this.notificationService.showWarning("Replaced the folder to move with the current one.", "Warning");
+      localStorage.removeItem("fileToMove");
+      this.notificationService.showWarning("Replaced the file to move with the current one.", "Warning");
     }
-    localStorage.setItem("folderToMove", JSON.stringify(this.folder));
+    localStorage.setItem("fileToMove", JSON.stringify(this.file));
   }
 
   edit() : void {
-    this.router.navigate(['/editFolder/', this.folder.id]);
+    this.router.navigate(['/editFolder/', this.file.id]);
   }
 
 

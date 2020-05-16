@@ -1,20 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FolderService, NotificationService } from '../../_services';
-import { Folder, User } from '../../_models';
+import { FileService, NotificationService } from '../../_services';
+import { Folder, File, User } from '../../_models';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-folder-list',
-  templateUrl: './folder-list.component.html',
-  styleUrls: ['./folder-list.component.css']
+  selector: 'app-file-list',
+  templateUrl: './file-list.component.html',
+  styleUrls: ['./file-list.component.css']
 })
-export class FolderListComponent implements OnInit {
-  folders : Folder[] ;
-  folderToMove : Folder;
+export class FileListComponent implements OnInit {
+  files : File[] ;
+  fileToMove : Folder;
   currentUser : User;
   private sub : Subscription = new Subscription();
 
-  constructor(private folderService : FolderService,
+  constructor(private fileService : FileService,
     private notificationService : NotificationService) { }
 
   @Input() folder : Folder;
@@ -22,23 +22,24 @@ export class FolderListComponent implements OnInit {
   ngOnInit() {
     if (this.folder!=null)
     {
-      this.folders = this.folder.subfolders;
+      this.files = this.folder.files;
     }
     else
     {
-    this.sub = this.folderService.getAll().subscribe(folders =>
-      this.folders = folders);
+    this.sub = this.fileService.getAll()
+    .subscribe(files =>
+      this.files = files);
     }
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    this.folderToMove = JSON.parse(localStorage.getItem("folderToMove"));
+    this.fileToMove = JSON.parse(localStorage.getItem("fileToMove"));
   }
   move() : void {
     if (this.folder!=null)
     {
-      this.sub = this.folderService.moveToFolder(this.folder.id, this.folderToMove.id)
+      this.sub = this.fileService.moveToFolder(this.folder.id, this.fileToMove.id)
       .subscribe(
         data => {
-          localStorage.removeItem("folderToMove");
+          localStorage.removeItem("fileToMove");
           window.location.reload();
         },
         error => {
@@ -48,10 +49,10 @@ export class FolderListComponent implements OnInit {
     }
     else
     {
-      this.sub = this.folderService.moveToFolder(null, this.folderToMove.id)
+      this.sub = this.fileService.moveToFolder(null, this.fileToMove.id)
       .subscribe(
         data => {
-          localStorage.removeItem("folderToMove");
+          localStorage.removeItem("fileToMove");
           window.location.reload();
         },
         error => {
