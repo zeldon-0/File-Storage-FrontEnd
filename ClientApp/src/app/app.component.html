@@ -3,6 +3,7 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
       <div class="navbar-nav">
           <a class="nav-item nav-link" (click)="logout()">Logout</a>
+          <a class="nav-item nav-link" routerLink="/account">My Account</a>
           <a class="nav-item nav-link" routerLink="/">My Storage</a>
           <a class="nav-item nav-link" routerLink="/shared">Shared Storage</a>
       </div>

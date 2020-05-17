@@ -37,7 +37,7 @@ export class SharingService {
 
   getFileUserShares(fileId : string)
   {
-    return this.http.get<User[]>(`${this.apiUrl}/filse/${fileId}/sharingInfo`);
+    return this.http.get<User[]>(`${this.apiUrl}/files/${fileId}/sharingInfo`);
   }
   
   shareFolder(folderId : string, userName : string)

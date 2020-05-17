@@ -12,3 +12,7 @@ export * from './shared-storage';
 export * from './file-list';
 export * from './file-form';
 export * from './file';
+export * from './file-edit';
+export * from './shared-files';
+export * from './account';
+export * from './account-edit';

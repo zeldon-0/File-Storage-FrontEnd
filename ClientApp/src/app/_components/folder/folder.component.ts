@@ -81,7 +81,14 @@ export class FolderComponent implements OnInit {
     this.sub = this.folderService.delete(this.folderId)
     .subscribe(
       obj =>{
-        this.router.navigate(['/folders/', this.folder.parentId])
+        if(this.folder.parentId)
+        {
+          this.router.navigate(['/folders/', this.folder.parentId]);
+        }
+        else
+        {
+          this.router.navigate(['/']);
+        }
       },
       error => {
         this.notificationService.showError(error, "Error");

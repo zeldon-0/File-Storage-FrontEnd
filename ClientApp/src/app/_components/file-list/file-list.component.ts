@@ -32,6 +32,7 @@ export class FileListComponent implements OnInit {
     }
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     this.fileToMove = JSON.parse(localStorage.getItem("fileToMove"));
+    console.log(this.currentUser);
   }
   move() : void {
     if (this.folder!=null)

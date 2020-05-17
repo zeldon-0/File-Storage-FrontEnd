@@ -17,6 +17,7 @@ export class AppComponent {
        private router: Router,
       private authenticationService: AuthenticationService
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
   }
 

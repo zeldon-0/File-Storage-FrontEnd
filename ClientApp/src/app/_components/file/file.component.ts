@@ -82,7 +82,14 @@ export class FileComponent implements OnInit {
     this.sub = this.fileService.delete(this.fileId)
     .subscribe(
       obj =>{
-        this.router.navigate(['/folders/', this.file.folderId])
+        if (this.file.folderId)
+        {
+          this.router.navigate(['/folders/', this.file.folderId]);
+        }
+        else
+        {
+          this.router.navigate(['/']);
+        }
       },
       error => {
         this.notificationService.showError(error, "Error");
@@ -98,7 +105,7 @@ export class FileComponent implements OnInit {
   }
 
   edit() : void {
-    this.router.navigate(['/editFolder/', this.file.id]);
+    this.router.navigate(['/editFile/', this.file.id]);
   }
 
 

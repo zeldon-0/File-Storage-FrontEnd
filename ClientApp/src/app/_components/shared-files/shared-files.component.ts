@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { SharingService, NotificationService } from '../../_services';
-import { Folder } from '../../_models';
+import { File } from '../../_models';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-shared-folders',
-  templateUrl: './shared-folders.component.html',
-  styleUrls: ['./shared-folders.component.css']
+  selector: 'app-shared-files',
+  templateUrl: './shared-files.component.html',
+  styleUrls: ['./shared-files.component.css']
 })
-export class SharedFoldersComponent implements OnInit {
-  folders : Folder[] ;
+export class SharedFilesComponent implements OnInit {
+  files : File[] ;
   private sub : Subscription = new Subscription();
 
   constructor(private sharingService : SharingService,
@@ -17,9 +17,9 @@ export class SharedFoldersComponent implements OnInit {
 
   ngOnInit() {
     
-    this.sub = this.sharingService.getSharedFolders()
-    .subscribe(folders =>{
-      this.folders = folders
+    this.sub = this.sharingService.getSharedFiles()
+    .subscribe(files => {
+      this.files = files;
     },
     error => {
       this.notificationService.showError(error,"Error");

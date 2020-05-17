@@ -1,0 +1,13 @@
+<div class="body">
+    <div class = "flex-headers">
+        <p class ="title">Files:</p>
+    </div>
+    <div class="flex">
+    <div class ="grid">
+    <ng-container  *ngFor = "let file of files" >
+
+    <a class = "subtitle file btn btn-outline-secondary" [routerLink] = "['/files/', file.id]">{{file.name}}</a>
+    </ng-container>
+    </div>
+    </div>
+</div>

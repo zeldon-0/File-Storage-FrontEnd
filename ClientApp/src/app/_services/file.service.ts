@@ -44,7 +44,7 @@ export class FileService {
     }
 
     delete(fileId: string) {
-        return this.http.delete(`${this.apiUrl}folders/${fileId}`);
+        return this.http.delete(`${this.apiUrl}files/${fileId}`);
     }
  }
 

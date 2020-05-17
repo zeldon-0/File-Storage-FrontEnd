@@ -11,6 +11,9 @@ import {FolderEditComponent} from './_components';
 import {SharedStorageComponent} from './_components';
 import {FileFormComponent} from './_components';
 import {FileComponent} from './_components';
+import { FileEditComponent } from './_components';
+import { AccountComponent } from './_components';
+import { AccountEditComponent } from './_components';
 
 const appRoutes: Routes = [
     { path: '', component: OwnStorageComponent, canActivate: [AuthGuard] },
@@ -35,7 +38,11 @@ const appRoutes: Routes = [
     {path : 'newFile', component: FileFormComponent},
     {path : 'newFile/:folderId', component: FileFormComponent},
     {path : 'editFolder/:folderId', component: FolderEditComponent},
+    {path : 'editFile/:fileId', component: FileEditComponent},
+    {path : 'editAccount', component: AccountEditComponent},
+    {path : 'editAccount/:userId', component: AccountEditComponent},
     {path : 'shared', component: SharedStorageComponent},
+    {path : 'account', component: AccountComponent},
     { path: '**', redirectTo: '' }
 ];
 

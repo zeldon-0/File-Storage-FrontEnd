@@ -24,6 +24,10 @@ import { SharedStorageComponent } from './_components';
 import { FileListComponent } from './_components';
 import { FileFormComponent } from './_components';
 import { FileComponent } from './_components';
+import { FileEditComponent } from './_components';
+import { SharedFilesComponent } from './_components';
+import { AccountComponent } from './_components';
+import { AccountEditComponent } from './_components';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,7 +57,11 @@ import { ToastrModule } from 'ngx-toastr';
         SharedStorageComponent,
         FileListComponent,
         FileFormComponent,
-        FileComponent
+        FileComponent,
+        FileEditComponent,
+        SharedFilesComponent,
+        AccountComponent,
+        AccountEditComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

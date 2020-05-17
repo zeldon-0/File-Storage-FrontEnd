@@ -1,0 +1,72 @@
+<div class ="page">
+    <div id = "main">
+  
+      <ng-container style = "text-align: center;" *ngIf = "userId">  
+        <button class = "return btn btn-outline-secondary" [routerLink] = "['/users/']">&#8249;</button>
+      </ng-container>
+      
+      <ng-container style = "text-align: center;" *ngIf = "userId == null">  
+        <button class = "return btn btn-outline-secondary" [routerLink] = "['/']">&#8249;</button>
+      </ng-container>
+  
+    </div>
+    <div class = "flex col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div id = "nav" class= "side-menu">
+        <div>
+          <p class = "subtitle">User Name:</p>
+          <p class = "content">{{user.userName}} </p>
+  
+        </div>
+        <div>
+          <p class = "subtitle">User Email:</p>
+          <p class = "content">{{user.email}} </p>
+        </div>
+        <div>
+            <p class = "subtitle">Roles:</p>
+            <div class="flex-content">
+
+                    <div class ="user" *ngFor = "let role of user.roles ">
+                        <a class=" subtitle-user badge">{{role}}</a>
+                    </div>
+            </div>
+        </div>
+       
+        <div>
+          <p class = "subtitle">Upgarding:</p>
+          <div class = "content"  *ngIf = "!user.roles.includes('Corporate')">
+             <button class="btn btn-outline-info" (click)="upgrade()"> Upgrade to Corporate </button>   
+          </div>
+          <div class = "content"  *ngIf = "user.roles.includes('Corporate')">
+            <button class="btn btn-outline-info" (click)="revertUpgrade()"> Revert to User </button>   
+         </div>
+  
+        </div>
+        <div class = "content">
+          <p class = "subtitle">Storage:</p>
+          <button *ngIf = "currentUser.id == user.id" class="btn btn-outline-info"  [routerLink] = "['/']" >Display the user's storage</button>
+          <button *ngIf = "currentUser.id != user.id" class="btn btn-outline-info"  [routerLink] = "['/']" >Display the user's storage</button>
+        </div>
+
+        <div>
+          <p class = "subtitle">Account Management:</p>
+          <div class = "flex-buttons">
+            <div class = "content">
+              <button class="btn btn-outline-warning" (click)="edit()"> Edit Info</button>   
+            </div>
+            
+            <div class = "content" *ngIf = "currentUser.id == user.id">
+              <button class="btn btn-outline-info" (click)="changePassword()"> Change Password</button>   
+            </div>
+                        
+  
+            <div class = "content">
+              <button class="btn btn-outline-danger" (click)="delete()"> Delete</button>   
+            </div>
+          </div>
+        
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,85 @@
+#page {
+    display: grid;
+    width: 100%;
+    grid-template-areas: "main main main"
+                         "main main main";
+    grid-template-rows: 50px 1fr 30px;
+    grid-template-columns: 2fr 1fr;
+  }
+  
+  .return{
+    box-sizing: content-box;
+    text-decoration: none;
+    margin: 10px 0px 0px 10px;
+    padding: 10px 14px;
+    padding-top: 3px;
+    font-size: 35px;
+    width: 40px;
+    text-align: center;
+    border-style: solid;
+    color: black;
+  }
+  .flex {
+    display: flex;
+    width: 95%;
+    flex-direction: column;
+  }
+  .flex-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .side-menu{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 5%;
+    border: slategray;
+    border-style: solid;
+    border-radius: 10px;
+  
+  }
+  .side-menu > div{
+  
+    border-top: 3px solid gray;
+    margin-bottom:10px;
+  }
+  .subtitle {
+    background-color: lightblue;
+    text-align: center;
+  }
+  .content{
+    text-align: center;
+  }
+  .btn-sharing{
+    align-content: center;
+  }
+
+.flex-content  {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+  }
+
+.user{
+  justify-self: stretch;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-right: 4px;
+  margin-left: 4px;
+  max-height: 50px;
+  border-width: 1px;
+  border-radius: 10px;
+  border-style: solid;
+  text-align: center;
+  box-sizing: content-box;
+
+  background-color: mintcream;
+}
+.subtitle-user
+  {
+    color:black;
+    font-size: 100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
