@@ -68,7 +68,7 @@ export class AccountEditComponent implements OnInit {
             this.router.navigate([`../users/${this.userId}`]);
           }
           else{
-            this.notificationService.showSuccess("Successfully updated your account info. Please, sign in again.", "Success")
+            this.notificationService.showSuccess("Successfully updated your account info. Please, sign in again.", "Success");
             localStorage.removeItem("currentUser");
             this.router.navigate([`/`]);          
           }

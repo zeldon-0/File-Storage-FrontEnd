@@ -16,3 +16,4 @@ export * from './file-edit';
 export * from './shared-files';
 export * from './account';
 export * from './account-edit';
+export * from './password-edit';

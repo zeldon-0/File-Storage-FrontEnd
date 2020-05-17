@@ -22,13 +22,16 @@ export class AccountService {
         return this.http.put<User>(`${this.apiUrl}account/edit`, user);
     }
 
-    delete(id: number) {
-        return this.http.delete(`${this.apiUrl}/users/${id}`);
+    delete() {
+        return this.http.delete(`${this.apiUrl}account/delete`);
     }
     upgrade(){
         return this.http.put(`${this.apiUrl}account/upgrade`,{});
     }
     revertUpgrade(){
         return this.http.put(`${this.apiUrl}account/revertUpgrade`,{});
+    }
+    changePassword(oldPassword: string, newPassword: string){
+      return this.http.put(`${this.apiUrl}account/updatePassword?oldPassword=${oldPassword}&newPassword=${newPassword}`, {});
     }
 }

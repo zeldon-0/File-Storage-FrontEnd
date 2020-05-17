@@ -26,7 +26,6 @@ export class AccountComponent implements OnInit {
 ) { 
   this.url = this.router.url;
   this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  console.log(this.currentUser);
 }
 
   @Input() userId: number;
@@ -92,8 +91,20 @@ export class AccountComponent implements OnInit {
   edit():void{
     this.router.navigate(['/editAccount/']);
   }
-  delete():void{
+  changePassword():void{
+    this.router.navigate(['/changePassword/']);
+  }
 
+  delete():void{
+    this.sub = this.accountService.delete()
+    .subscribe(user => 
+      {
+        localStorage.removeItem("currentUser");
+        this.router.navigate(['/']);
+      },
+      error =>{
+        this.notificationService.showError(error, "Error");
+      });
   }
 
 }
