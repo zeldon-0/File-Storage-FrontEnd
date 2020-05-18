@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AccountService, NotificationService} from '../../_services';
+import { AccountService, UserService, NotificationService, AuthenticationService} from '../../_services';
 
 import { Folder, File, User } from '../../_models';
 import { Subscription } from 'rxjs';
@@ -18,17 +18,23 @@ export class AccountComponent implements OnInit {
   currentUser: User;
   url: string;
   user: User;
+  userId : string;
 
   constructor(private accountService : AccountService,
+    private userService : UserService,
     private route : ActivatedRoute,
     private router : Router,
-    private notificationService : NotificationService
+    private notificationService : NotificationService,
+    private authenticationService : AuthenticationService
 ) { 
   this.url = this.router.url;
   this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  this.route.paramMap.subscribe(params => {
+    this.userId = params.get('userId');
+  });
+  console.log(this.currentUser.refreshToken);
 }
 
-  @Input() userId: number;
 
   ngOnInit(): void {
     if (this.userId == null){
@@ -43,7 +49,7 @@ export class AccountComponent implements OnInit {
         });
     }
     else{
-      this.sub = this.accountService.getAccountInfo(this.userId)
+      this.sub = this.userService.getById(Number(this.userId))
       .subscribe(user => 
         {
           this.user = user;
@@ -56,13 +62,28 @@ export class AccountComponent implements OnInit {
     }
   }
   upgrade():void{
-    if (!this.userId)
-    {
+    if (!this.userId){
       this.sub = this.accountService.upgrade()
+      .subscribe(user => {
+        },
+        error =>{
+          this.notificationService.showError(error, "Error");
+          this.router.navigate(['/users/']);
+        });
+      this.sub = this.authenticationService.refreshToken(this.currentUser.refreshToken)
       .subscribe(user => 
         {
-            this.currentUser.roles =this.currentUser.roles.concat("Corporate");
-            localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          window.location.reload();
+        },
+        error =>{
+          this.notificationService.showError(error, "Error");
+        });
+    }
+    else{
+      this.sub = this.userService.upgrade()
+      .subscribe(user => 
+        {
             window.location.reload();
         },
         error =>{
@@ -76,15 +97,20 @@ export class AccountComponent implements OnInit {
     if (!this.userId)
     {
       this.sub = this.accountService.revertUpgrade()
-      .subscribe(user => 
-        {
-          this.currentUser.roles = this.currentUser.roles.filter(function(value, index, arr){ return value != "Corporate";})
-          localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-          window.location.reload();
+      .subscribe(user => {
         },
         error =>{
           this.notificationService.showError(error, "Error");
-          this.router.navigate(['/users/']);
+          this.router.navigate(['/account/']);
+        });
+        this.sub = this.authenticationService.refreshToken(this.currentUser.refreshToken)
+        .subscribe(user => 
+          {
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            window.location.reload();
+          },
+          error =>{
+            this.notificationService.showError(error, "Error");
         });
     }
   }

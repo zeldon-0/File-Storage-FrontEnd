@@ -29,6 +29,7 @@ import { SharedFilesComponent } from './_components';
 import { AccountComponent } from './_components';
 import { AccountEditComponent } from './_components';
 import { PasswordEditComponent } from './_components';
+import { UserListComponent } from './_components';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,7 +64,8 @@ import { ToastrModule } from 'ngx-toastr';
         SharedFilesComponent,
         AccountComponent,
         AccountEditComponent,
-        PasswordEditComponent
+        PasswordEditComponent,
+        UserListComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

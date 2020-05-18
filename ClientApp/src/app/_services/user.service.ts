@@ -13,18 +13,20 @@ export class UserService {
     }
 
     getById(id: number) {
-        return this.http.get(`${this.apiUrl}users/${id}`);
-    }
-
-    register(user: SignUpModel) {
-        return this.http.post(`${this.apiUrl}account/signUp`, user);
+        return this.http.get<User>(`${this.apiUrl}users/${id}`);
     }
 
     update(user: User) {
-        return this.http.put(`${this.apiUrl}/users/${user.id}`, user);
+        return this.http.put<User>(`${this.apiUrl}account/edit`, user);
     }
 
-    delete(id: number) {
-        return this.http.delete(`${this.apiUrl}/users/${id}`);
+    delete(userId: number) {
+        return this.http.delete(`${this.apiUrl}users`);
+    }
+    upgrade(){
+        return this.http.put(`${this.apiUrl}users/upgrade`,{});
+    }
+    revertUpgrade(){
+        return this.http.put(`${this.apiUrl}users/revertUpgrade`,{});
     }
 }

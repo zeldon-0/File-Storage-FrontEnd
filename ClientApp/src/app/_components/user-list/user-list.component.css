@@ -1,0 +1,67 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
+
+#page {
+  display: grid;
+  width: 100%;
+  grid-template-areas: "main main nav"
+                       "main main nav";
+  grid-template-rows: 50px 1fr 30px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.body{
+  margin-left: 1%;
+}
+.grid {
+    position:relative;
+    display: grid;
+    min-height: 100px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 30px;
+    grid-row-gap: 10px;
+    border: cadetblue;
+    border-style: ridge;
+    padding:10px;
+  }
+.flex {
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+}
+
+.flex-headers{
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  padding: 10px 0px 10px 0px;
+
+}
+
+.user{
+  max-height: 50px;
+  border-style: groove;
+  border-width: 3px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: mintcream;
+}
+
+.title{
+  color:gray;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding-top: 20px;
+  font-size: 150%;
+}
+.subtitle
+{
+  color:black;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.parameter{
+  font-weight: lighter;
+  color: gray;
+}

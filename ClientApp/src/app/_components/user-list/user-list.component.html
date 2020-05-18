@@ -1,0 +1,15 @@
+
+<div id ="main">
+    <div class="body">
+        <div class = "flex-headers">
+            <p class ="title">Users:</p>
+        </div>
+        <div class="flex">
+            <div class ="grid">
+                <ng-container  *ngFor = "let listUser of users" >
+                    <a class = "subtitle user btn btn-outline-secondary" [routerLink] = "['/users/', listUser.id]">{{listUser.userName}}</a>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

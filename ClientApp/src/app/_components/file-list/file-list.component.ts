@@ -26,13 +26,12 @@ export class FileListComponent implements OnInit {
     }
     else
     {
-    this.sub = this.fileService.getAll()
-    .subscribe(files =>
-      this.files = files);
+      this.sub = this.fileService.getAll()
+      .subscribe(files =>
+        this.files = files);
     }
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     this.fileToMove = JSON.parse(localStorage.getItem("fileToMove"));
-    console.log(this.currentUser);
   }
   move() : void {
     if (this.folder!=null)

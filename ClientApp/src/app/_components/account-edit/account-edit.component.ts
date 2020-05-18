@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { User } from '../../_models';
-import { AccountService, NotificationService } from '../../_services'
+import { AccountService, NotificationService, AuthenticationService } from '../../_services'
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -21,7 +21,8 @@ export class AccountEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notificationService : NotificationService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService
 
     ) { }
 
@@ -68,9 +69,16 @@ export class AccountEditComponent implements OnInit {
             this.router.navigate([`../users/${this.userId}`]);
           }
           else{
-            this.notificationService.showSuccess("Successfully updated your account info. Please, sign in again.", "Success");
-            localStorage.removeItem("currentUser");
-            this.router.navigate([`/`]);          
+            this.authenticationService.refreshToken(this.currentUser.refreshToken)
+            .subscribe(user => 
+              {
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                this.router.navigate([`/account/`]);
+                this.notificationService.showSuccess("Successfully updated your account info.", "Success");     
+              },
+              error =>{
+                this.notificationService.showError(error, "Error");
+              });       
           }
         },
         error => {

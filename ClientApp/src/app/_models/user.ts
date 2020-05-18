@@ -4,4 +4,5 @@
     email: string;
     roles : string[];
     token?: string;
+    refreshToken?: string;
 }

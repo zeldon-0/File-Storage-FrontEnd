@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { User } from '../../_models';
-import { AccountService, NotificationService } from '../../_services'
+import { AccountService, NotificationService, AuthenticationService } from '../../_services'
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,12 +17,15 @@ export class PasswordEditComponent implements OnInit {
   currentUser : User;
   user: User;
   constructor(private accountService : AccountService,
+    private authenticationService : AuthenticationService,
     private formBuilder: FormBuilder,
     private notificationService : NotificationService,
     private router: Router,
     private route: ActivatedRoute
 
-    ) { }
+    ) { 
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    }
 
   ngOnInit(): void {
  
@@ -33,21 +36,30 @@ export class PasswordEditComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  onSubmit(): void {
   
     if (this.passwordForm.invalid) {
         return;
     }
-
-    this.accountService.changePassword(this.passwordForm.value.oldPassword, this.passwordForm.value.newPassword )
-    .subscribe(
-        data => {
-            this.notificationService.showSuccess("Successfully updated your password.", "Success");
-            this.router.navigate([`/account/`]);          
-        },
-        error => {
-            this.notificationService.showError(error, "Error")
-        });
+    this.sub = 
+      this.accountService.changePassword(this.passwordForm.value.oldPassword, this.passwordForm.value.newPassword )
+      .subscribe(
+         data => {
+          this.authenticationService.refreshToken(this.currentUser.refreshToken)
+          .subscribe(user => 
+            {
+              localStorage.setItem("currentUser", JSON.stringify(user));
+              this.router.navigate([`/account/`]);
+              this.notificationService.showSuccess("Successfully updated your password.", "Success");     
+            },
+            error =>{
+              this.notificationService.showError(error, "Error");
+            });
+            },
+          error => {
+              this.notificationService.showError(error, "Error")
+    });
+  
 
   }
   ngOnDestroy() : void {

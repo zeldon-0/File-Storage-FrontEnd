@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private notificationService : NotificationService
     ) {
-        // redirect to home if already logged in
+
         if (localStorage.getItem("currentUser")) { 
             this.router.navigate(['/']);
         }
@@ -32,22 +32,20 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
-        // get return url from route parameters or default to '/'
+
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
 
     onSubmit() {
         this.submitted = true;
 
-        // stop here if form is invalid
+
         if (this.loginForm.invalid) {
             return;
         }
 
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
             .pipe(first())
             .subscribe(
                 data => {

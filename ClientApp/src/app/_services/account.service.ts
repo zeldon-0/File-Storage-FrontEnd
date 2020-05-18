@@ -13,17 +13,14 @@ export class AccountService {
     {
       return this.http.get<User>(`${this.apiUrl}account`);
     }
-    
-    register(user: SignUpModel) {
-        return this.http.post(`${this.apiUrl}account/signUp`, user);
-    }
+
 
     update(user: User) {
-        return this.http.put<User>(`${this.apiUrl}account/edit`, user);
+        return this.http.put<User>(`${this.apiUrl}account`, user);
     }
 
     delete() {
-        return this.http.delete(`${this.apiUrl}account/delete`);
+        return this.http.delete(`${this.apiUrl}account`);
     }
     upgrade(){
         return this.http.put(`${this.apiUrl}account/upgrade`,{});
