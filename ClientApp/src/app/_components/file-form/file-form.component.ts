@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./file-form.component.css']
 })
 export class FileFormComponent implements OnInit {
-  private sub : Subscription = new Subscription();
   fileForm: FormGroup;
   private folderId: string; 
   constructor(private fileService : FileService,
@@ -67,8 +66,4 @@ export class FileFormComponent implements OnInit {
                 });
     }
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
 }

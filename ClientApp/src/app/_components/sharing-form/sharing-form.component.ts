@@ -12,7 +12,6 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 export class SharingFormComponent implements OnInit {
   folders : Folder[] ;
-  private sub : Subscription = new Subscription();
   sharingForm: FormGroup;
   constructor(private sharingService : SharingService,
     private formBuilder: FormBuilder,
@@ -62,9 +61,5 @@ export class SharingFormComponent implements OnInit {
       this.notificationService.showError("Could not get a resource to share.", "Error")
     }
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
 
 }

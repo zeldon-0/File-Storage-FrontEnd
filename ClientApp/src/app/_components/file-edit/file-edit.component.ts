@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./file-edit.component.css']
 })
 export class FileEditComponent implements OnInit {
-  private sub : Subscription = new Subscription();
   editForm: FormGroup;
   private fileId: string;
   file : File; 
@@ -27,7 +26,7 @@ export class FileEditComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.fileId = params.get('fileId');
     });
-    this.sub = this.fileService.getById(this.fileId)
+    this.fileService.getById(this.fileId)
       .subscribe(
         file => {
           this.file = file;
@@ -64,9 +63,6 @@ export class FileEditComponent implements OnInit {
             this.notificationService.showError(error, "Error")
         });
 
-  }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
   }
 
 }

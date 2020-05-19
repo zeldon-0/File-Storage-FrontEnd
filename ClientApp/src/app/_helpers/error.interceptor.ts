@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthenticationService } from '../_services';
+import { User } from '../_models';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -12,12 +13,27 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
             if (err.status === 401) {
-                this.authenticationService.logout();
-                location.reload(true);
+                if(localStorage.getItem("currentUser")){
+                    let currentUser =  JSON.parse(localStorage.getItem("currentUser"));
+                    this.authenticationService
+                        .refreshToken(currentUser.refreshToken, currentUser.token)
+                        .subscribe(user =>{
+                            localStorage.setItem("currentUser", JSON.stringify(user));
+                        },
+                        error =>{
+                            if (error.status == 404){
+                                this.authenticationService.logout();
+                            }
+                        });
+                }
+                else{
+                    this.authenticationService.logout();
+                }
             }
-            
-            const error = err.error;
-            return throwError(error);
+            else{
+                const error = err.error;
+                return throwError(error);
+            }
         }))
     }
 }

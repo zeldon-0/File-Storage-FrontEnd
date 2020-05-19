@@ -12,7 +12,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class PasswordEditComponent implements OnInit {
 
-  private sub : Subscription = new Subscription();
   passwordForm: FormGroup;
   currentUser : User;
   user: User;
@@ -41,30 +40,27 @@ export class PasswordEditComponent implements OnInit {
     if (this.passwordForm.invalid) {
         return;
     }
-    this.sub = 
-      this.accountService.changePassword(this.passwordForm.value.oldPassword, this.passwordForm.value.newPassword )
+
+    this.accountService.changePassword(this.passwordForm.value.oldPassword, this.passwordForm.value.newPassword )
       .subscribe(
          data => {
-          this.authenticationService.refreshToken(this.currentUser.refreshToken)
-          .subscribe(user => 
-            {
-              localStorage.setItem("currentUser", JSON.stringify(user));
-              this.router.navigate([`/account/`]);
-              this.notificationService.showSuccess("Successfully updated your password.", "Success");     
-            },
-            error =>{
-              this.notificationService.showError(error, "Error");
-            });
-            },
-          error => {
-              this.notificationService.showError(error, "Error")
-    });
+          this.authenticationService
+            .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
+            .subscribe(user => 
+              {
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                this.router.navigate([`/account/`]);
+                this.notificationService.showSuccess("Successfully updated your password.", "Success");     
+              },
+              error =>{
+                this.notificationService.showError(error, "Error");
+              });
+              },
+            error => {
+                this.notificationService.showError(error, "Error")
+             });
   
 
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
 
 }

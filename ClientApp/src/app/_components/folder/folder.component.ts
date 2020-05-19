@@ -13,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class FolderComponent implements OnInit {
 
   folder : Folder;
-  private sub : Subscription = new Subscription();
   private folderId : string;
   error:string;
   currentUser: User;
@@ -37,7 +36,7 @@ export class FolderComponent implements OnInit {
 
 
 
-    this.sub = this.folderService.getById(this.folderId)
+    this.folderService.getById(this.folderId)
       .subscribe(folder => 
         {
           this.folder = folder;
@@ -50,7 +49,7 @@ export class FolderComponent implements OnInit {
 
 
   share() : void {
-    this.sub = this.sharingService.makeFolderShareable(this.folderId)
+    this.sharingService.makeFolderShareable(this.folderId)
       .subscribe(
         obj =>{window.location.reload()},
         error => {
@@ -60,7 +59,7 @@ export class FolderComponent implements OnInit {
   }
 
   unShare() : void {
-    this.sub = this.sharingService.makeFolderUnshareable(this.folderId)
+    this.sharingService.makeFolderUnshareable(this.folderId)
     .subscribe(
       obj =>{window.location.reload()},
       error => {
@@ -68,7 +67,7 @@ export class FolderComponent implements OnInit {
       });
   }
   copy() : void {
-    this.sub = this.folderService.copy(this.folderId)
+    this.folderService.copy(this.folderId)
     .subscribe(
       obj =>{
         this.notificationService.showSuccess("Successfully copied the folder", "Success");
@@ -78,7 +77,7 @@ export class FolderComponent implements OnInit {
       });
   }
   delete() : void {
-    this.sub = this.folderService.delete(this.folderId)
+    this.folderService.delete(this.folderId)
     .subscribe(
       obj =>{
         if(this.folder.parentId)
@@ -107,8 +106,4 @@ export class FolderComponent implements OnInit {
     this.router.navigate(['/editFolder/', this.folder.id]);
   }
 
-
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
 }

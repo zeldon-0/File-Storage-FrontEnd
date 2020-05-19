@@ -44,7 +44,7 @@
         <div class = "content">
           <p class = "subtitle">Storage:</p>
           <button *ngIf = "currentUser.id == user.id" class="btn btn-outline-info"  [routerLink] = "['/']" >Display the user's storage</button>
-          <button *ngIf = "currentUser.id != user.id" class="btn btn-outline-info"  [routerLink] = "['/']" >Display the user's storage</button>
+          <button *ngIf = "currentUser.id != user.id" class="btn btn-outline-info"  [routerLink] = "['/userStorage/', userId]" >Display the user's storage</button>
         </div>
 
         <div>

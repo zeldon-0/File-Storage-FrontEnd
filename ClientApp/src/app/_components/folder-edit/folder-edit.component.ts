@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder-edit.component.css']
 })
 export class FolderEditComponent implements OnInit {
-  private sub : Subscription = new Subscription();
   editForm: FormGroup;
   private folderId: string;
   folder : Folder; 
@@ -27,7 +26,7 @@ export class FolderEditComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.folderId = params.get('folderId');
     });
-    this.sub = this.folderService.getById(this.folderId)
+    this.folderService.getById(this.folderId)
       .subscribe(
         folder => {
           this.folder = folder;
@@ -63,8 +62,4 @@ export class FolderEditComponent implements OnInit {
         });
 
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
 }

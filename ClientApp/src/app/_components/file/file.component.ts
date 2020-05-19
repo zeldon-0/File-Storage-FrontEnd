@@ -13,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class FileComponent implements OnInit {
 
   file : File;
-  private sub : Subscription = new Subscription();
   private fileId : string;
   error:string;
   currentUser: User;
@@ -38,7 +37,7 @@ export class FileComponent implements OnInit {
 
 
 
-    this.sub = this.fileService.getById(this.fileId)
+    this.fileService.getById(this.fileId)
       .subscribe(file => 
         {
           this.file = file;
@@ -51,7 +50,7 @@ export class FileComponent implements OnInit {
 
 
   share() : void {
-    this.sub = this.sharingService.makeFileShareable(this.fileId)
+    this.sharingService.makeFileShareable(this.fileId)
       .subscribe(
         obj =>{window.location.reload()},
         error => {
@@ -61,7 +60,7 @@ export class FileComponent implements OnInit {
   }
 
   unShare() : void {
-    this.sub = this.sharingService.makeFileUnshareable(this.fileId)
+    this.sharingService.makeFileUnshareable(this.fileId)
     .subscribe(
       obj =>{window.location.reload()},
       error => {
@@ -69,7 +68,7 @@ export class FileComponent implements OnInit {
       });
   }
   copy() : void {
-    this.sub = this.fileService.copy(this.fileId)
+    this.fileService.copy(this.fileId)
     .subscribe(
       obj =>{
         this.notificationService.showSuccess("Successfully copied the file", "Success");
@@ -79,7 +78,7 @@ export class FileComponent implements OnInit {
       });
   }
   delete() : void {
-    this.sub = this.fileService.delete(this.fileId)
+    this.fileService.delete(this.fileId)
     .subscribe(
       obj =>{
         if (this.file.folderId)
@@ -108,8 +107,4 @@ export class FileComponent implements OnInit {
     this.router.navigate(['/editFile/', this.file.id]);
   }
 
-
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
 }

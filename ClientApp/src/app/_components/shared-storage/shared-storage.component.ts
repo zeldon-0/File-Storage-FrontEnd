@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, OnInit,} from '@angular/core';
 import { User } from '../../_models';
 
 
@@ -7,7 +7,7 @@ import { User } from '../../_models';
             styleUrls: ['./shared-storage.component.css'] })
 
 
-export class SharedStorageComponent implements OnInit, OnDestroy {
+export class SharedStorageComponent implements OnInit {
     currentUser: User;
 
     constructor(
@@ -16,10 +16,6 @@ export class SharedStorageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-    }
-
-    ngOnDestroy() {
-
     }
 
 }

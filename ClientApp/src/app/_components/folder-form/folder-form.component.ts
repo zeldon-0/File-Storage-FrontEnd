@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder-form.component.css']
 })
 export class FolderFormComponent implements OnInit {
-  private sub : Subscription = new Subscription();
   folderForm: FormGroup;
   private folderId: string; 
   constructor(private folderService : FolderService,
@@ -65,8 +64,4 @@ export class FolderFormComponent implements OnInit {
                 });
     }
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
 }

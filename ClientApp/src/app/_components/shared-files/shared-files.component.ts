@@ -10,14 +10,13 @@ import { Subscription } from 'rxjs';
 })
 export class SharedFilesComponent implements OnInit {
   files : File[] ;
-  private sub : Subscription = new Subscription();
 
   constructor(private sharingService : SharingService,
     private notificationService : NotificationService) { }
 
   ngOnInit() {
     
-    this.sub = this.sharingService.getSharedFiles()
+    this.sharingService.getSharedFiles()
     .subscribe(files => {
       this.files = files;
     },
@@ -25,11 +24,6 @@ export class SharedFilesComponent implements OnInit {
       this.notificationService.showError(error,"Error");
     });
     
-  }
-
-
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
   }
 
 }

@@ -51,4 +51,5 @@ export class RegisterComponent implements OnInit {
                     this.notificationService.showError(error, "Error")
                 });
     }
+
 }

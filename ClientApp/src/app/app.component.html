@@ -6,6 +6,7 @@
           <a class="nav-item nav-link" routerLink="/account">My Account</a>
           <a class="nav-item nav-link" routerLink="/">My Storage</a>
           <a class="nav-item nav-link" routerLink="/shared">Shared Storage</a>
+          <a class="nav-item nav-link" *ngIf = "currentUser.roles.includes('Admin')" routerLink="/users">Users</a>
       </div>
     </nav>
   </header>

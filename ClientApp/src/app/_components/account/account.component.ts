@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AccountComponent implements OnInit {
 
-  private sub : Subscription = new Subscription();
+
   error:string;
   currentUser: User;
   url: string;
@@ -38,7 +38,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userId == null){
-      this.sub = this.accountService.getAccountInfo(this.currentUser.id)
+      this.accountService.getAccountInfo(this.currentUser.id)
       .subscribe(user => 
         {
           this.user = user;
@@ -49,7 +49,7 @@ export class AccountComponent implements OnInit {
         });
     }
     else{
-      this.sub = this.userService.getById(Number(this.userId))
+      this.userService.getById(this.userId)
       .subscribe(user => 
         {
           this.user = user;
@@ -61,27 +61,29 @@ export class AccountComponent implements OnInit {
 
     }
   }
+
   upgrade():void{
     if (!this.userId){
-      this.sub = this.accountService.upgrade()
+      this.accountService.upgrade()
       .subscribe(user => {
         },
         error =>{
           this.notificationService.showError(error, "Error");
           this.router.navigate(['/users/']);
         });
-      this.sub = this.authenticationService.refreshToken(this.currentUser.refreshToken)
-      .subscribe(user => 
-        {
-          localStorage.setItem("currentUser", JSON.stringify(user));
-          window.location.reload();
-        },
-        error =>{
-          this.notificationService.showError(error, "Error");
-        });
+      this.authenticationService
+        .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
+        .subscribe(user => 
+          {
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            window.location.reload();
+          },
+          error =>{
+            this.notificationService.showError(error, "Error");
+          });
     }
     else{
-      this.sub = this.userService.upgrade()
+      this.userService.upgrade()
       .subscribe(user => 
         {
             window.location.reload();
@@ -96,41 +98,60 @@ export class AccountComponent implements OnInit {
   revertUpgrade(): void{
     if (!this.userId)
     {
-      this.sub = this.accountService.revertUpgrade()
+      this.accountService.revertUpgrade()
       .subscribe(user => {
         },
         error =>{
           this.notificationService.showError(error, "Error");
           this.router.navigate(['/account/']);
         });
-        this.sub = this.authenticationService.refreshToken(this.currentUser.refreshToken)
-        .subscribe(user => 
-          {
-            localStorage.setItem("currentUser", JSON.stringify(user));
-            window.location.reload();
-          },
-          error =>{
-            this.notificationService.showError(error, "Error");
-        });
+        this.authenticationService        
+          .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
+          .subscribe(user => 
+            {
+              localStorage.setItem("currentUser", JSON.stringify(user));
+              window.location.reload();
+            },
+            error =>{
+              this.notificationService.showError(error, "Error");
+          });
     }
   }
   edit():void{
-    this.router.navigate(['/editAccount/']);
+    if (!this.userId){
+      this.router.navigate(['/editAccount/']);
+    }
+    else{
+      this.router.navigate(['/editAccount/', this.userId]);
+    }
   }
   changePassword():void{
     this.router.navigate(['/changePassword/']);
   }
 
   delete():void{
-    this.sub = this.accountService.delete()
-    .subscribe(user => 
-      {
-        localStorage.removeItem("currentUser");
-        this.router.navigate(['/']);
-      },
-      error =>{
-        this.notificationService.showError(error, "Error");
-      });
+    if (!this.userId){
+      this.accountService.delete()
+      .subscribe(user => 
+        {
+          localStorage.removeItem("currentUser");
+          this.router.navigate(['/']);
+        },
+        error =>{
+          this.notificationService.showError(error, "Error");
+        });
+    }
+    else{
+      this.userService.delete(this.userId)
+        .subscribe(user => 
+          {
+            this.notificationService.showSuccess("Successfully deleted the user.", "Success");
+            this.router.navigate(['users']);
+          },
+        error => {
+          this.notificationService.showError(error, "Error");
+        })
+    }
   }
 
 }

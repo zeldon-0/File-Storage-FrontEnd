@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { User } from '../../_models';
-import { AccountService, NotificationService, AuthenticationService } from '../../_services'
+import { AccountService, UserService, NotificationService, AuthenticationService } from '../../_services'
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +12,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AccountEditComponent implements OnInit {
 
-  private sub : Subscription = new Subscription();
   editForm: FormGroup;
   private userId: string;
   currentUser : User;
@@ -22,7 +21,8 @@ export class AccountEditComponent implements OnInit {
     private notificationService : NotificationService,
     private router: Router,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private userService: UserService
 
     ) { }
 
@@ -33,10 +33,22 @@ export class AccountEditComponent implements OnInit {
     });
     
     if (this.userId){
-
+      this.userService.getById(this.userId)
+      .subscribe(
+        user => {
+          this.user = user;
+          this.editForm = this.formBuilder.group({
+            userName: [this.user.userName],
+            email: [this.user.email]
+        });
+        },
+        error =>
+        {
+          this.notificationService.showError(error, "Error");
+        });
     }
     else{
-      this.sub = this.accountService.getAccountInfo(this.currentUser.id)
+      this.accountService.getAccountInfo(this.currentUser.id)
         .subscribe(
           user => {
             this.user = user;
@@ -62,33 +74,37 @@ export class AccountEditComponent implements OnInit {
     user.userName = this.editForm.value.userName;
     user.email = this.editForm.value.email;
 
-    this.accountService.update(user)
-    .subscribe(
+    if (!this.userId){
+      this.accountService.update(user)
+      .subscribe(
         data => {
-          if (this.currentUser.id != user.id){
-            this.router.navigate([`../users/${this.userId}`]);
-          }
-          else{
-            this.authenticationService.refreshToken(this.currentUser.refreshToken)
-            .subscribe(user => 
-              {
-                localStorage.setItem("currentUser", JSON.stringify(user));
-                this.router.navigate([`/account/`]);
-                this.notificationService.showSuccess("Successfully updated your account info.", "Success");     
-              },
-              error =>{
-                this.notificationService.showError(error, "Error");
-              });       
-          }
-        },
-        error => {
-            this.notificationService.showError(error, "Error")
-        });
-
+            this.authenticationService        
+              .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
+              .subscribe(user => 
+                {
+                  localStorage.setItem("currentUser", JSON.stringify(user));
+                  this.router.navigate([`/account/`]);
+                  this.notificationService.showSuccess("Successfully updated your account info.", "Success");     
+                },
+                error =>{
+                  this.notificationService.showError(error, "Error");
+                });       
+            
+          },
+          error => {
+              this.notificationService.showError(error, "Error")
+          });
+    }
+    else {
+      this.userService.update(user)
+      .subscribe(
+          data => {
+              this.router.navigate(['/users/', this.userId]);
+              this.notificationService.showSuccess("Successfully updated the account's info.", "Success");     
+          },
+          error => {
+              this.notificationService.showError(error, "Error")
+          });
+    }
   }
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
-
 }

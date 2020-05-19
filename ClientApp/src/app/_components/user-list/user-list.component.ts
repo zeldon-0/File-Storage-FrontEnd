@@ -12,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UserListComponent implements OnInit {
   users : User[] ;
   currentUser : User;
-  private sub : Subscription = new Subscription();
   userId : number;
 
   constructor(private userService : UserService,
@@ -35,21 +34,14 @@ export class UserListComponent implements OnInit {
         this.userId = Number(params.get('userId'));
       });
 
-      this.sub = this.userService.getAll()
+      this.userService.getAll()
       .subscribe(users =>{
         this.users = users
       },
       error => {
         this.notificationService.showError(error, "Error");
       });
-    }
-    
+    } 
   }
-
-
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
-  }
-
 
 }

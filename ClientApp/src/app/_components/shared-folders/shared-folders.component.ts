@@ -10,14 +10,13 @@ import { Subscription } from 'rxjs';
 })
 export class SharedFoldersComponent implements OnInit {
   folders : Folder[] ;
-  private sub : Subscription = new Subscription();
 
   constructor(private sharingService : SharingService,
     private notificationService : NotificationService) { }
 
   ngOnInit() {
     
-    this.sub = this.sharingService.getSharedFolders()
+    this.sharingService.getSharedFolders()
     .subscribe(folders =>{
       this.folders = folders
     },
@@ -25,11 +24,6 @@ export class SharedFoldersComponent implements OnInit {
       this.notificationService.showError(error,"Error");
     });
     
-  }
-
-
-  ngOnDestroy() : void {
-    this.sub.unsubscribe();
   }
 
 }

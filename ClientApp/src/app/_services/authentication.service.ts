@@ -22,27 +22,26 @@ export class AuthenticationService {
     login(Login: string, Password: string) {
         return this.http.post<User>(`${this.apiUrl}account/signin`, { Login, Password })
             .pipe(map(user => {
-                // login successful if there's a jwt token in the response
                 if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
                 return user;
             }));
     }
 
-    refreshToken(token : string){
+    refreshToken(refreshToken : string, oldToken : string){
         const headerDict = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Access-Control-Allow-Headers': 'Content-Type',
-            'refreshToken': `${token}`
+            'refreshToken': refreshToken,
+            'oldToken': oldToken
           }
           
           const requestOptions = {                                                                                                                                                                                 
             headers: new HttpHeaders(headerDict), 
           };
-        return this.http.get<User>(`${this.apiUrl}account/refresh?refreshToken=${token}`, requestOptions);
+        return this.http.get<User>(`${this.apiUrl}account/refresh`, requestOptions);
     }
 
     logout() {

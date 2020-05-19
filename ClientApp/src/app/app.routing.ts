@@ -48,6 +48,7 @@ const appRoutes: Routes = [
     {path : 'users/:userId', component: AccountComponent},
     {path : 'shared', component: SharedStorageComponent},
     {path : 'account', component: AccountComponent},
+    {path : 'userStorage/:userId', component: OwnStorageComponent},
     { path: '**', redirectTo: '' }
 ];
 
