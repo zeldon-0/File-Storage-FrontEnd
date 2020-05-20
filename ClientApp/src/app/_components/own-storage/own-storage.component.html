@@ -1,3 +1,5 @@
-﻿
+﻿<ng-container style = "text-align: center;" *ngIf = "userId">  
+    <button class = "return btn btn-outline-secondary" [routerLink] = "['/users/', userId]">&#8249;</button>
+</ng-container>
 <app-folder-list></app-folder-list>
 <app-file-list></app-file-list>

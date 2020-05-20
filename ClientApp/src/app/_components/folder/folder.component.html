@@ -6,9 +6,14 @@
     </ng-container>
 
     
-    <ng-container style = "text-align: center;" *ngIf = "folder.parentId == null && folder.ownerId != currentUser.id">  
+    <ng-container style = "text-align: center;" *ngIf = "folder.parentId == null && folder.ownerId != currentUser.id  && !currentUser.roles.includes('Admin')">  
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/shared/']">&#8249;</button>
     </ng-container>
+
+    <ng-container style = "text-align: center;" *ngIf = "folder.parentId == null && folder.ownerId != currentUser.id  && currentUser.roles.includes('Admin')">  
+      <button class = "return btn btn-outline-secondary" [routerLink] = "['/userStorage/', folder.ownerId]">&#8249;</button>
+    </ng-container>
+    
 
     <ng-container *ngIf = "folder.parentId">  
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/folders/', folder.parentId]">&#8249;</button>

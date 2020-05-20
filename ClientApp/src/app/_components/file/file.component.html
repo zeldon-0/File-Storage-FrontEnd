@@ -5,9 +5,14 @@
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/']">&#8249;</button>
     </ng-container>
     
-    <ng-container style = "text-align: center;" *ngIf = "file.folderId == null && file.ownerId != currentUser.id">  
+    <ng-container style = "text-align: center;" *ngIf = "file.folderId == null && file.ownerId != currentUser.id && !currentUser.roles.includes('Admin') ">  
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/shared/']">&#8249;</button>
     </ng-container>
+
+    <ng-container style = "text-align: center;" *ngIf = "file.folderId == null && file.ownerId != currentUser.id && currentUser.roles.includes('Admin') ">  
+      <button class = "return btn btn-outline-secondary" [routerLink] = "['/userStorage/', file.ownerId]">&#8249;</button>
+    </ng-container>
+
 
     <ng-container *ngIf = "file.folderId">  
       <button class = "return btn btn-outline-secondary" [routerLink] = "['/folders/', file.folderId]">&#8249;</button>
