@@ -24,6 +24,9 @@ export class PasswordEditComponent implements OnInit {
 
     ) { 
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if(this.currentUser == null){
+        this.router.navigate(['/login/']);
+      }
     }
 
   ngOnInit(): void {

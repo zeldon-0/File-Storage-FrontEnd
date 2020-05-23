@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { File } from '../../_models';
+import { File, User } from '../../_models';
 import { FileService, NotificationService } from '../../_services'
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -14,12 +14,18 @@ export class FileEditComponent implements OnInit {
   editForm: FormGroup;
   private fileId: string;
   file : File; 
+  private currentUser: User;
   constructor(private fileService : FileService,
     private formBuilder: FormBuilder,
     private notificationService : NotificationService,
     private router: Router,
     private route: ActivatedRoute
-    ) { }
+    ) { 
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(this.currentUser == null){
+    this.router.navigate(['/login/']);
+  }
+    }
 
   
   ngOnInit() {

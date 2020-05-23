@@ -39,6 +39,12 @@
         <p class = "subtitle">Folder Owner:</p>
         <p class = "content">{{folder.owner.userName}} </p>
       </div>
+      <div>
+        <p class = "subtitle">Last Change:</p>
+        <p class = "content">{{datepipe.transform(folder.lastChange, 'medium')}} </p>
+
+      </div>
+
       <div *ngIf = "currentUser.id == folder.ownerId || currentUser.roles.includes('Admin') ">
         <p class = "subtitle">Share Status:</p>
         <div class = "content"  *ngIf = "folder.shareStatus == 0">

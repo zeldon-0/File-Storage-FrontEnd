@@ -32,3 +32,9 @@
     font-size: 100%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
+.small-btn
+{
+  font-size: small;
+  font-weight: bold;
+  padding: 1px 4% 1px 4%;
+}

@@ -5,6 +5,7 @@ export class Folder {
     parentId : string;
     name : string;
     description : string;
+    lastChange: Date;
     owner : User;
     ownerId : number;
     subfolders : Folder[];

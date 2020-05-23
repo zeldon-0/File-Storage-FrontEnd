@@ -18,7 +18,12 @@ export class FolderListComponent implements OnInit {
   constructor(private folderService : FolderService,
     private userService : UserService,
     private notificationService : NotificationService,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute,
+    private router: Router) {
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if(this.currentUser == null){
+        this.router.navigate(['/login/']);
+      } 
       this.route.paramMap.subscribe(params => {
         this.userId = params.get('userId');
       });
@@ -27,7 +32,6 @@ export class FolderListComponent implements OnInit {
   @Input() folder : Folder;
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     this.folderToMove = JSON.parse(localStorage.getItem("folderToMove"));
 
     if(this.userId){

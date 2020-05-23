@@ -1,7 +1,16 @@
 <div class="flex">
     <div class="grid"> 
         <ngcontainer class ="user" *ngFor = "let user of users">
-            <a class=" subtitle badge">{{user.userName}}</a>
+            <a class=" subtitle badge">{{user.userName}}       
+                <button class="btn btn-outline-danger small-btn" 
+                    *ngIf = "file && ((currentUser.id == file.ownerId && currentUser.roles.includes('Corporate')) || currentUser.roles.includes('Admin')) "
+                    (click)="unshareFile(user.userName)"> X
+                </button>
+                <button class="btn btn-outline-danger small-btn" 
+                    *ngIf = "folder && ((currentUser.id == folder.ownerId && currentUser.roles.includes('Corporate')) || currentUser.roles.includes('Admin')) "
+                    (click)="unshareFolder(user.userName)"> X
+                </button>
+            </a>
         </ngcontainer>
     </div>
 </div>

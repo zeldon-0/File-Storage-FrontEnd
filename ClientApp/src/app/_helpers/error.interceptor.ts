@@ -8,7 +8,8 @@ import { User } from '../_models';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authenticationService: AuthenticationService) {}
+    constructor(private authenticationService: AuthenticationService,
+        ) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
@@ -21,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                             localStorage.setItem("currentUser", JSON.stringify(user));
                         },
                         error =>{
-                            if (error.status == 404){
+                            if (error.status === 404){
                                 this.authenticationService.logout();
                             }
                         });

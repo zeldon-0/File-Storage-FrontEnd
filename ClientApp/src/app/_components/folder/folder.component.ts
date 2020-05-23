@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FolderService, SharingService, NotificationService} from '../../_services';
 
 import { Folder, User } from '../../_models';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-folder',
@@ -21,11 +21,15 @@ export class FolderComponent implements OnInit {
     private route : ActivatedRoute,
     private router : Router,
     private notificationService : NotificationService,
-    private sharingService : SharingService
+    private sharingService : SharingService,
+    public datepipe: DatePipe
     ) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.url = this.router.url;
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if(this.currentUser == null){
+        this.router.navigate(['/login/']);
+      }
 
     }
 

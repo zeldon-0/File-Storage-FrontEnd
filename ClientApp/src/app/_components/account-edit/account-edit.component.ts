@@ -28,6 +28,9 @@ export class AccountEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(this.currentUser == null){
+      this.router.navigate(['/login/']);
+    }
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId');
     });

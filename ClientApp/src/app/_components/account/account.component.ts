@@ -29,10 +29,13 @@ export class AccountComponent implements OnInit {
 ) { 
   this.url = this.router.url;
   this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if(this.currentUser == null){
+    this.router.navigate(['/login/']);
+  }
+  
   this.route.paramMap.subscribe(params => {
     this.userId = params.get('userId');
   });
-  console.log(this.currentUser.refreshToken);
 }
 
 

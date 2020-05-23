@@ -5,6 +5,7 @@ export class File {
     name : string;
     description : string;
     url : string;
+    lastChange: Date;
     owner : User;
     ownerId : number;
     shareStatus : number;

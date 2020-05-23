@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {File} from '../../_models';
+import {File, User} from '../../_models';
 import { FileService, NotificationService } from '../../_services'
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -13,12 +13,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class FileFormComponent implements OnInit {
   fileForm: FormGroup;
   private folderId: string; 
+  private currentUser : User;
   constructor(private fileService : FileService,
     private formBuilder: FormBuilder,
     private notificationService : NotificationService,
     private router: Router,
     private route: ActivatedRoute
-    ) { }
+    ) {
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if(this.currentUser == null){
+        this.router.navigate(['/login/']);
+      }
+     }
 
   
   ngOnInit() {

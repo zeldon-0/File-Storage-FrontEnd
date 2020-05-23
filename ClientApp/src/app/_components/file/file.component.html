@@ -38,6 +38,11 @@
         <p class = "subtitle">File Link:</p>
         <p class = "content">{{file.url}} </p>
       </div>
+      <div>
+        <p class = "subtitle">Last Change:</p>
+        <p class = "content">{{datepipe.transform(file.lastChange, 'medium')}} </p>
+
+      </div>
       <div *ngIf = "currentUser.id == file.ownerId || currentUser.roles.includes('Admin') ">
         <p class = "subtitle">Share Status:</p>
         <div class = "content"  *ngIf = "file.shareStatus == 0">

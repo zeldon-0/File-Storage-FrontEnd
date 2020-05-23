@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {Folder} from '../../_models';
+import {Folder, User} from '../../_models';
 import { FolderService, NotificationService } from '../../_services'
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -14,12 +14,18 @@ export class FolderEditComponent implements OnInit {
   editForm: FormGroup;
   private folderId: string;
   folder : Folder; 
+  private currentUser : User;
   constructor(private folderService : FolderService,
     private formBuilder: FormBuilder,
     private notificationService : NotificationService,
     private router: Router,
     private route: ActivatedRoute
-    ) { }
+    ) {
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if(this.currentUser == null){
+        this.router.navigate(['/login/']);
+      }  
+     }
 
   
   ngOnInit() {

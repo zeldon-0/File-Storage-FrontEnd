@@ -50,6 +50,16 @@ export class SharingService {
     return this.http.put(`${this.apiUrl}/files/${fileId}/share/${userName}`, {});
   }
 
+  unshareFolder(folderId : string, userName : string)
+  {
+    return this.http.put(`${this.apiUrl}/folders/${folderId}/unshare/${userName}`, {});
+  }
+
+  unshareFile(fileId : string, userName : string)
+  {
+    return this.http.put(`${this.apiUrl}/files/${fileId}/unshare/${userName}`, {});
+  }
+
   getSharedFolders()
   {
     return this.http.get<Folder[]>(`${this.apiUrl}/folders/shared`);

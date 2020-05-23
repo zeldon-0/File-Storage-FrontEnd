@@ -17,7 +17,12 @@ export class FileListComponent implements OnInit {
   constructor(private fileService : FileService,
     private userService : UserService,
     private notificationService : NotificationService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
+      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if(this.currentUser == null){
+      this.router.navigate(['/login/']);
+       }
       this.route.paramMap.subscribe(params => {
         this.userId = params.get('userId');
       });
@@ -26,7 +31,6 @@ export class FileListComponent implements OnInit {
   @Input() folder : Folder;
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     this.fileToMove = JSON.parse(localStorage.getItem("fileToMove"));
     
     if(this.userId){

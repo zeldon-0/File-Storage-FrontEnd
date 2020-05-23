@@ -19,7 +19,9 @@ export class UserListComponent implements OnInit {
     private notificationService : NotificationService,
     private router : Router,) { 
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    }
+      if(this.currentUser == null){
+          this.router.navigate(['/login/']);
+      }    }
 
 
   ngOnInit() {

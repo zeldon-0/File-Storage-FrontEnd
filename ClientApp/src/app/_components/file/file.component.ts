@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FileService, SharingService, NotificationService} from '../../_services';
 
 import { Folder, File, User } from '../../_models';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-file',
@@ -22,11 +22,15 @@ export class FileComponent implements OnInit {
     private router : Router,
     private notificationService : NotificationService,
     private sharingService : SharingService,
+    public datepipe: DatePipe
 
     ) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.url = this.router.url;
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if(this.currentUser == null){
+        this.router.navigate(['/login/']);
+      }
 
     }
 
