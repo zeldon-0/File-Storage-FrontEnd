@@ -20,15 +20,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                         .refreshToken(currentUser.refreshToken, currentUser.token)
                         .subscribe(user =>{
                             localStorage.setItem("currentUser", JSON.stringify(user));
+                            window.location.reload();
                         },
-                        error =>{
-                            if (error.status === 404){
-                                this.authenticationService.logout();
-                            }
+                        error =>{    
+                            localStorage.removeItem('currentUser');
+                            window.location.reload();
                         });
                 }
-                else{
-                    this.authenticationService.logout();
+                else{   
+                    window.location.reload()
                 }
             }
             else{
