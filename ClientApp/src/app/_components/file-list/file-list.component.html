@@ -2,8 +2,8 @@
     <div class = "flex-headers">
         <p class ="title">Files:</p>
         <button class = "btn btn-outline-secondary"  *ngIf = "fileToMove"  (click)="move()">Move the file here</button>
-        <button class = "add btn btn-outline-secondary"  *ngIf = "folder == null" [routerLink] = "['/newFile/']">+</button>
-        <button class = "add btn btn-outline-secondary"  *ngIf = "folder && (folder.ownerId == currentUser.id || currentUser.roles.includes('Admin'))" [routerLink] = "['/newFile/',folder.id]">+</button>
+        <button class = "add btn btn-outline-secondary"  *ngIf = "folder == null && !this.userId" [routerLink] = "['/newFile/']">+</button>
+        <button class = "add btn btn-outline-secondary"  *ngIf = "folder && (folder.ownerId == currentUser.id || currentUser.roles.includes('Admin')) && !this.userId" [routerLink] = "['/newFile/',folder.id]">+</button>
     </div>
     <div class="flex">
         <div class ="grid">

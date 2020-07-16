@@ -4,6 +4,7 @@ import { AccountService, UserService, NotificationService, AuthenticationService
 import { Folder, File, User } from '../../_models';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
 
 
 @Component({
@@ -73,8 +74,9 @@ export class AccountComponent implements OnInit {
         error =>{
           this.notificationService.showError(error, "Error");
           this.router.navigate(['/users/']);
-        });
-      this.authenticationService
+        },
+      () => { 
+        this.authenticationService
         .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
         .subscribe(user => 
           {
@@ -84,9 +86,11 @@ export class AccountComponent implements OnInit {
           error =>{
             this.notificationService.showError(error, "Error");
           });
+        }
+      );
     }
     else{
-      this.userService.upgrade()
+      this.userService.upgrade(this.userId)
       .subscribe(user => 
         {
             window.location.reload();
@@ -106,9 +110,9 @@ export class AccountComponent implements OnInit {
         },
         error =>{
           this.notificationService.showError(error, "Error");
-          this.router.navigate(['/account/']);
-        });
-        this.authenticationService        
+        },
+        () => { 
+          this.authenticationService
           .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
           .subscribe(user => 
             {
@@ -117,9 +121,22 @@ export class AccountComponent implements OnInit {
             },
             error =>{
               this.notificationService.showError(error, "Error");
-          });
+            });
+        });
+    }
+    else{
+      this.userService.revertUpgrade(this.userId)
+      .subscribe(user => 
+        {
+            window.location.reload();
+        },
+        error =>{
+          this.notificationService.showError(error, "Error");
+          this.router.navigate(['/users/']);
+        }).unsubscribe();
     }
   }
+  
   edit():void{
     if (!this.userId){
       this.router.navigate(['/editAccount/']);
@@ -128,6 +145,7 @@ export class AccountComponent implements OnInit {
       this.router.navigate(['/editAccount/', this.userId]);
     }
   }
+
   changePassword():void{
     this.router.navigate(['/changePassword/']);
   }

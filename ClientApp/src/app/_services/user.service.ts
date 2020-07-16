@@ -23,11 +23,11 @@ export class UserService {
     delete(userId: string) {
         return this.http.delete(`${this.apiUrl}users/${userId}`);
     }
-    upgrade(){
-        return this.http.put(`${this.apiUrl}users/upgrade`,{});
+    upgrade(userId: string){
+        return this.http.put(`${this.apiUrl}users/${userId}/upgrade`,{});
     }
-    revertUpgrade(){
-        return this.http.put(`${this.apiUrl}users/revertUpgrade`,{});
+    revertUpgrade(userId: string){
+        return this.http.put(`${this.apiUrl}users/${userId}/revertUpgrade`,{});
     }
     getUserFolders(userId : string){
         return this.http.get<Folder[]>(`${this.apiUrl}users/${userId}/folders`,{});
