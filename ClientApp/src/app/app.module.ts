@@ -3,10 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-
-// used to create fake backend
-
-
 import { AppComponent }  from './app.component';
 import { routing }        from './app.routing';
 

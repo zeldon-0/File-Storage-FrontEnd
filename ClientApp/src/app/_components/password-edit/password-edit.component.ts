@@ -49,19 +49,18 @@ export class PasswordEditComponent implements OnInit {
          data => {
           this.authenticationService
             .refreshToken(this.currentUser.refreshToken,  this.currentUser.token)
-            .subscribe(user => 
-              {
-                localStorage.setItem("currentUser", JSON.stringify(user));
-                this.router.navigate([`/account/`]);
-                this.notificationService.showSuccess("Successfully updated your password.", "Success");     
-              },
-              error =>{
-                this.notificationService.showError(error, "Error");
-              });
-              },
-            error => {
-                this.notificationService.showError(error, "Error")
-             });
+            .subscribe(user => {
+              localStorage.setItem("currentUser", JSON.stringify(user));
+              this.router.navigate([`/account/`]);
+              this.notificationService.showSuccess("Successfully updated your password.", "Success");     
+            },
+            error =>{
+              this.notificationService.showError(error, "Error");
+            });
+          },
+          error => {
+            this.notificationService.showError(error, "Error")
+    });
   
 
   }
